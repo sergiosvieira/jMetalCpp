@@ -84,7 +84,7 @@ Srinivas::~Srinivas()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Srinivas::evaluate(Solution *solution)
+void Srinivas::evaluate(ValuePtr solution)
 {
 
     Variable **variables = solution->getDecisionVariables();

@@ -49,10 +49,11 @@ AdaptiveGridArchive::AdaptiveGridArchive (int maxSize,int bisections,
  * otherwise.
  */
 
-bool AdaptiveGridArchive::add(Solution * solution, int eval)
+bool AdaptiveGridArchive::add(ValuePtr solution, int eval)
 {
     int i=0;
-    Solution * aux; //Store an solution temporally
+    //Solution * aux; //Store an solution temporally
+	ValuePtr aux; //Store an solution temporally
 
     while (i < solutionsList_.size())
     {

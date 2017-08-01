@@ -60,7 +60,7 @@ public:
      * Constructor.
      * Creates a new uniform mutation operator instance.
      */
-    UniformMutation(map<string, void *> parameters);
+    UniformMutation(MapOfStringFunct parameters);
 
     /**
      * Executes the operation

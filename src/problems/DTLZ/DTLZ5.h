@@ -33,7 +33,7 @@ class DTLZ5 : public Problem
 {
 public:
     DTLZ5(std::string solutionType, int numberOfVariables = 12, int numberOfObjectives = 3);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
     virtual ~DTLZ5();
 private:

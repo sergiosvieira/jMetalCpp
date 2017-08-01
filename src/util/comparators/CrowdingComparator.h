@@ -39,7 +39,7 @@ private:
 public:
     CrowdingComparator();
     ~CrowdingComparator();
-    int compare(void * o1, void * o2);
+    int compare(ValuePtr o1, ValuePtr o2);
 
 };
 

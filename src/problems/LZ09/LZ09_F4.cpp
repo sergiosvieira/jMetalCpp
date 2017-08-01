@@ -89,7 +89,7 @@ LZ09_F4::~LZ09_F4 ()
     delete LZ09_ ;
 }
 
-void LZ09_F4::evaluate(Solution * solution)
+void LZ09_F4::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
 
@@ -106,9 +106,11 @@ void LZ09_F4::evaluate(Solution * solution)
     } // for
 
     LZ09_->objective(x, y) ;
-
+	Solution& sol = CastValue(solution, Solution)->getData();
     for (int i = 0; i < numberOfObjectives_; i++)
-        solution->setObjective(i, y->at(i));
+	{
+        sol.setObjective(i, y->at(i));
+	}
 
     delete x;
     delete y;

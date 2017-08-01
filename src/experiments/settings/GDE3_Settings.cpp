@@ -68,16 +68,16 @@ Algorithm * GDE3_Settings::configure()
 {
 
     algorithm = snew GDE3(problem_);
-    algorithm->setInputParameter("populationSize",&populationSize_);
-    algorithm->setInputParameter("maxIterations",&maxIterations_);
+    algorithm->setInputParameter("populationSize", IntValue(populationSize_));
+    algorithm->setInputParameter("maxIterations", IntValue(maxIterations_));
 
     // Mutation and Crossover for Real codification
    MapOfStringFunct parameters;
 
     double CR = CR_;
     double F = F_;
-    parameters["CR"] =  &CR;
-    parameters["F"] = &F;
+    parameters["CR"] =  DoubleValue(CR);
+    parameters["F"] = DoubleValue(F);
     crossover = snew DifferentialEvolutionCrossover(parameters);
 
     // Selection Operator

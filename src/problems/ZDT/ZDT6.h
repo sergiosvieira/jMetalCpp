@@ -40,7 +40,7 @@ private:
 
 public:
     ZDT6(string solutionType, int numberOfVariables = 10);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
     virtual ~ZDT6();
 };
 

@@ -37,7 +37,7 @@ class Schaffer : public Problem
 public:
     Schaffer(std::string solutionType);
     ~Schaffer();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 };
 
 #endif

@@ -57,7 +57,7 @@ ZDT5::~ZDT5()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void ZDT5::evaluate(Solution *solution)
+void ZDT5::evaluate(ValuePtr solution)
 {
     Binary * variable ;
     int    counter  ;

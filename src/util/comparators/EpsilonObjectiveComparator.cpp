@@ -45,7 +45,7 @@ EpsilonObjectiveComparator::EpsilonObjectiveComparator(int nObj, double eta) : C
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
  */
-int EpsilonObjectiveComparator::compare(void *o1, void *o2)
+int EpsilonObjectiveComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1==nullptr)
@@ -53,8 +53,9 @@ int EpsilonObjectiveComparator::compare(void *o1, void *o2)
     else if (o2 == nullptr)
         return -1;
 
-    double objetive1 = ((Solution *) o1)->getObjective(objective_);
-    double objetive2 = ((Solution *) o2)->getObjective(objective_);
+
+    double objetive1 = CastValue(o1, Solution)->getData().getObjective(objective_);
+    double objetive2 = CastValue(o2, Solution)->getData().getObjective(objective_);
 
     //Objetive implements comparable!!!
     if (objetive1/(1 + eta_) < objetive2)

@@ -73,7 +73,7 @@ Schaffer::~Schaffer()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Schaffer::evaluate(Solution *solution)
+void Schaffer::evaluate(ValuePtr solution)
 {
 
     double *fx;

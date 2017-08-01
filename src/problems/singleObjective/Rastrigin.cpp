@@ -76,7 +76,7 @@ Rastrigin::~Rastrigin()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Rastrigin::evaluate(Solution *solution)
+void Rastrigin::evaluate(ValuePtr solution)
 {
     //double fx [numberOfObjectives_] ;
     //double x [numberOfVariables_];

@@ -67,16 +67,16 @@ Algorithm * PSO_Settings::configure()
 {
 
     algorithm = new PSO(problem_);
-    algorithm->setInputParameter("swarmSize", &swarmSize_);
-    algorithm->setInputParameter("maxIterations", &maxIterations_);
+    algorithm->setInputParameter("swarmSize", IntValue(swarmSize_));
+    algorithm->setInputParameter("maxIterations", IntValue(maxIterations_));
 
    MapOfStringFunct parameters;
 
     // Mutation operator
     double mutationProbability = mutationProbability_;
     double mutationDistributionIndex = mutationDistributionIndex_;
-    parameters["probability"] = &mutationProbability;
-    parameters["distributionIndex"] = &mutationDistributionIndex;
+    parameters["probability"] = DoubleValue(mutationProbability);
+    parameters["distributionIndex"] = DoubleValue(mutationDistributionIndex);
     mutation = new PolynomialMutation(parameters);
 
     // Add the operators to the algorithm

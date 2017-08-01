@@ -36,9 +36,10 @@ XReal::XReal()
  * Constructor
  * @param solution
  */
-XReal::XReal(Solution * solution)
+XReal::XReal(ValuePtr solution)
 {
-    type_ = solution->getType();
+	Solution& sol = CastValue(solution, Solution)->getData();
+    type_ = sol.getType();
     solution_ = solution;
 }
 
@@ -54,11 +55,13 @@ double XReal::getValue(int index)
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
     {
-        return solution_->getDecisionVariables()[index]->getValue();
+		Solution& sol = CastValue(solution_, Solution)->getData();
+        return sol.getDecisionVariables()[index]->getValue();
     }
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
     {
-        return ((ArrayReal*)(solution_->getDecisionVariables()[0]))->array_[index];
+		Solution& sol = CastValue(solution_, Solution)->getData();
+        return ((ArrayReal*)(sol.getDecisionVariables()[0]))->array_[index];
     }
     else
     {
@@ -78,14 +81,15 @@ double XReal::getValue(int index)
  */
 void XReal::setValue(int index, double value)
 {
+	Solution& sol = CastValue(solution_, Solution)->getData();
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
-    {
-        solution_->getDecisionVariables()[index]->setValue(value);
+    {		
+        sol.getDecisionVariables()[index]->setValue(value);
     }
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
     {
-        ((ArrayReal*)(solution_->getDecisionVariables()[0]))->array_[index]=value;
+        ((ArrayReal*)(sol.getDecisionVariables()[0]))->array_[index]=value;
     }
     else
     {
@@ -104,11 +108,12 @@ void XReal::setValue(int index, double value)
  */
 double XReal::getLowerBound(int index)
 {
+	Solution& sol = CastValue(solution_, Solution)->getData();
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
-        return solution_->getDecisionVariables()[index]->getLowerBound();
+        return sol.getDecisionVariables()[index]->getLowerBound();
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
-        return ((ArrayReal*)(solution_->getDecisionVariables()[0]))->getLowerBound(index);
+        return ((ArrayReal*)(sol.getDecisionVariables()[0]))->getLowerBound(index);
     else
     {
         std::cout << "ERROR GRAVE: solution type "
@@ -127,11 +132,12 @@ double XReal::getLowerBound(int index)
  */
 double XReal::getUpperBound(int index)
 {
+	Solution& sol = CastValue(solution_, Solution)->getData();
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
-        return solution_->getDecisionVariables()[index]->getUpperBound();
+        return sol.getDecisionVariables()[index]->getUpperBound();
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
-        return ((ArrayReal*)(solution_->getDecisionVariables()[0]))->getUpperBound(index);
+        return ((ArrayReal*)(sol.getDecisionVariables()[0]))->getUpperBound(index);
     else
     {
         std::cout << "ERROR GRAVE: solution type "
@@ -148,12 +154,13 @@ double XReal::getUpperBound(int index)
  */
 int XReal::getNumberOfDecisionVariables()
 {
+	Solution& sol = CastValue(solution_, Solution)->getData();
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
         //return solution_->getDecisionVariables().length ;
-        return solution_->getNumberOfVariables();
+        return sol.getNumberOfVariables();
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
-        return ((ArrayReal*)(solution_->getDecisionVariables()[0]))->getLength() ;
+        return ((ArrayReal*)(sol.getDecisionVariables()[0]))->getLength() ;
     else
     {
         std::cout << "ERROR GRAVE: solution type "
@@ -170,11 +177,12 @@ int XReal::getNumberOfDecisionVariables()
  */
 int XReal::size()
 {
+	Solution& sol = CastValue(solution_, Solution)->getData();
     if ((typeid(*type_) == typeid(RealSolutionType)) ||
             (typeid(*type_) == typeid(BinaryRealSolutionType)))
-        return solution_->getNumberOfVariables();
+        return sol.getNumberOfVariables();
     else if (typeid(*type_) == typeid(ArrayRealSolutionType))
-        return ((ArrayReal*)(solution_->getDecisionVariables()[0]))->getLength();
+        return ((ArrayReal*)(sol.getDecisionVariables()[0]))->getLength();
     else
     {
         std::cout << "ERROR GRAVE: solution type "
@@ -185,7 +193,7 @@ int XReal::size()
 } // size
 
 
-Solution * XReal::getSolution()
+ValuePtr XReal::getSolution()
 {
     return solution_;
 } // getSolution

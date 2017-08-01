@@ -42,7 +42,7 @@ public:
     NonDominatedSolutionList(Comparator *dominance);
     ~NonDominatedSolutionList();
 
-    bool add(Solution *solution);
+    bool add(ValuePtrsolution);
 
 }; // NonDominatedSolutionList
 

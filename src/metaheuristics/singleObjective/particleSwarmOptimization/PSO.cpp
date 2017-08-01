@@ -293,7 +293,7 @@ SolutionSet * PSO::execute()
     //->Step 1 (and 3) Create the initial population and evaluate
     for (int i = 0; i < particlesSize_; i++)
     {
-        Solution * particle = new Solution(problem_);
+        ValuePtr particle = new Solution(problem_);
         problem_->evaluate(particle);
         evaluations_ ++;
         particles_->add(particle);
@@ -320,7 +320,7 @@ SolutionSet * PSO::execute()
     //-> Step 6. Initialize the memory of each particle
     for (int i = 0; i < particles_->size(); i++)
     {
-        Solution * particle = new Solution(particles_->get(i));
+        ValuePtr particle = new Solution(particles_->get(i));
         localBest_[i] = particle;
     }
 
@@ -341,7 +341,7 @@ SolutionSet * PSO::execute()
         //Evaluate the new particles_ in new positions
         for (int i = 0; i < particles_->size(); i++)
         {
-            Solution * particle = particles_->get(i);
+            ValuePtr particle = particles_->get(i);
             problem_->evaluate(particle);
             evaluations_ ++;
         }
@@ -353,13 +353,13 @@ SolutionSet * PSO::execute()
             //if (flag < 0) { // the new particle is best_ than the older remember
             if ((particles_->get(i)->getObjective(0) < localBest_[i]->getObjective(0)))
             {
-                Solution * particle = new Solution(particles_->get(i));
+                ValuePtr particle = new Solution(particles_->get(i));
                 delete localBest_[i];
                 localBest_[i] = particle;
             } // if
             if ((particles_->get(i)->getObjective(0) < globalBest_->getObjective(0)))
             {
-                Solution * particle = new Solution(particles_->get(i));
+                ValuePtr particle = new Solution(particles_->get(i));
                 delete globalBest_;
                 globalBest_ = particle;
             } // if
@@ -373,7 +373,7 @@ SolutionSet * PSO::execute()
     int * bestIndexPtr = (int *)findBestSolution_->execute(particles_);
     int bestIndex = *bestIndexPtr;
     delete bestIndexPtr;
-    Solution * s = particles_->get(bestIndex);
+    ValuePtr s = particles_->get(bestIndex);
     resultPopulation->add(new Solution(s));
 
     // Free memory

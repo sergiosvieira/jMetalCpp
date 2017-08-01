@@ -64,7 +64,7 @@ public:
      * @return -1, or 0, or 1 if o1 dominates o2, both are
      * non-dominated, or o1 is dominated by o2, respectively.
      */
-    int compare(void *o1, void *o2);
+	int compare(ValuePtr o1, ValuePtr o2);
 };
 
 #endif

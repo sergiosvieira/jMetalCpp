@@ -34,7 +34,7 @@ class BinaryTournament : public Selection
 {
 
 private:
-    Comparator * comparator_;
+	SharedComparator comparator_ = nullptr;
 
 public:
     BinaryTournament(MapOfStringFunct parameters);

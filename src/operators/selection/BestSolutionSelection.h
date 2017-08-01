@@ -33,12 +33,11 @@ class BestSolutionSelection : public Selection
 {
 
 private:
-    Comparator * comparator_;
+	SharedComparator comparator_ = nullptr;
 
 public:
     BestSolutionSelection(MapOfStringFunct parameters);
-    void *execute(void *);
-
+	ValuePtr execute(ValuePtr);
 };
 
 #endif // __BEST_SOLUTION_SELECTION__

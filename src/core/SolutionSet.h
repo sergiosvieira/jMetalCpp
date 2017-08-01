@@ -56,15 +56,15 @@ public:
     SolutionSet(int maximumSize);
     ~SolutionSet();
 
-    bool add(Solution * solution);
-    bool add(int index, Solution * solution);
-    Solution *get(int index);
+    bool add(ValuePtr solution);
+    bool add(int index, ValuePtr solution);
+	ValuePtr get(int index);
     int getMaxSize();
-    void sort(Comparator * comparator);
-    int indexBest(Comparator * comparator);
-    Solution * best(Comparator * comparator);
-    int indexWorst(Comparator * comparator);
-    Solution * worst(Comparator * comparator);
+    void sort(SharedComparator comparator);
+    int indexBest(SharedComparator comparator);
+	ValuePtr best(SharedComparator comparator);
+    int indexWorst(SharedComparator comparator);
+	ValuePtr worst(SharedComparator comparator);
     int size();
     void printObjectivesToFile(std::string path);
     void printObjectivesToFile(std::string path, bool append);
@@ -75,9 +75,9 @@ public:
     void remove(int i);
     void remove(int i, bool del);
     SolutionSet * join(SolutionSet * another);
-    void replace(int position, Solution * solution);
-    void replace(int position, Solution * solution, bool del);
-    std::vector <VectorOfDouble > writeObjectivesToMatrix();
+    void replace(int position, ValuePtr solution);
+    void replace(int position, ValuePtr solution, bool del);
+	MatrixOfDouble writeObjectivesToMatrix();
     void printObjectives();
 
     //void reset() ;

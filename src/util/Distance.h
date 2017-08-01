@@ -41,12 +41,12 @@ class Distance
 public:
     Distance();
     double ** distanceMatrix(SolutionSet * solutionSet);
-    double distanceToSolutionSetInObjectiveSpace(Solution * solution,
+    double distanceToSolutionSetInObjectiveSpace(ValuePtr solution,
             SolutionSet * solutionSet);
-    double distanceToSolutionSetInSolutionSpace(Solution * solution,
+    double distanceToSolutionSetInSolutionSpace(ValuePtr solution,
             SolutionSet * solutionSet);
-    double distanceBetweenSolutions(Solution * solutionI, Solution * solutionJ);
-    double distanceBetweenObjectives(Solution * solutionI, Solution * solutionJ);
+    double distanceBetweenSolutions(ValuePtr solutionI, ValuePtr solutionJ);
+    double distanceBetweenObjectives(ValuePtr solutionI, ValuePtr solutionJ);
     void crowdingDistanceAssignment(SolutionSet * solutionSet, int nObjs);
 
 };

@@ -77,7 +77,7 @@ Operator * Algorithm::getOperator(std::string name)
  * @param object Object that represent a parameter for the
  * algorithm.
 **/
-void Algorithm::setInputParameter(std::string name, void *value)
+void Algorithm::setInputParameter(std::string name, ValuePtr value)
 {
     inputParameters_[name] = value;
 }
@@ -90,7 +90,7 @@ void Algorithm::setInputParameter(std::string name, void *value)
  * @return Object representing the parameter or null if the parameter doesn't
  * exist or the name is wrong
 **/
-void * Algorithm::getInputParameter(std::string name)
+ValuePtr Algorithm::getInputParameter(std::string name)
 {
     return inputParameters_[name];
 }
@@ -104,7 +104,7 @@ void * Algorithm::getInputParameter(std::string name)
  * @param name The output parameter name
  * @param object Object representing the output parameter
 **/
-void Algorithm::setOutputParameter(std::string name, void *value)
+void Algorithm::setOutputParameter(std::string name, ValuePtr value)
 {
     outputParameters_[name] = value;
 }
@@ -117,7 +117,7 @@ void Algorithm::setOutputParameter(std::string name, void *value)
  * @return Object representing the output parameter, or null if the parameter
  * doesn't exist or the name is wrong.
 **/
-void * Algorithm::getOutputParameter(std::string name)
+ValuePtr Algorithm::getOutputParameter(std::string name)
 {
     return outputParameters_[name];
 }

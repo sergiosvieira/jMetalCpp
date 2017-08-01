@@ -35,7 +35,7 @@ class EqualSolutions : public Comparator
 {
 
 public:
-    int compare(void *solution1, void *solution2);
+	int compare(ValuePtr o1, ValuePtr o2);
 };
 
 #endif

@@ -37,7 +37,7 @@ WorstSolutionSelection::WorstSolutionSelection(MapOfStringFunct parameters)
     comparator_ = nullptr;
     if (parameters["comparator"] != nullptr)
     {
-        comparator_ = (Comparator *) parameters["comparator"];
+        comparator_ = CastValue(parameters["comparator"], Comparator);
     }
 }
 

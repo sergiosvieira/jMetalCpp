@@ -68,16 +68,16 @@ Algorithm * SMPSO_Settings::configure()
 {
 
     algorithm = new SMPSO(problem_);
-    algorithm->setInputParameter("swarmSize", &swarmSize_);
-    algorithm->setInputParameter("maxIterations", &maxIterations_);
-    algorithm->setInputParameter("archiveSize", &archiveSize_);
+    algorithm->setInputParameter("swarmSize", IntValue(swarmSize_));
+    algorithm->setInputParameter("maxIterations", IntValue(maxIterations_));
+    algorithm->setInputParameter("archiveSize", IntValue(archiveSize_));
 
    MapOfStringFunct parameters;
 
     double mutationProbability = mutationProbability_;
     double mutationDistributionIndex = mutationDistributionIndex_;
-    parameters["probability"] = &mutationProbability;
-    parameters["distributionIndex"] = &mutationDistributionIndex;
+    parameters["probability"] = DoubleValue(mutationProbability);
+    parameters["distributionIndex"] = DoubleValue(mutationDistributionIndex);
     mutation = new PolynomialMutation(parameters);
 
     // Add the operators to the algorithm

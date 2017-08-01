@@ -46,8 +46,8 @@ private:
 public:
     Tanaka(string solutionType);
     ~Tanaka();
-    void evaluate(Solution *solution);
-    void evaluateConstraints(Solution * solution);
+    void evaluate(ValuePtr solution);
+    void evaluateConstraints(ValuePtr solution);
 
 };
 

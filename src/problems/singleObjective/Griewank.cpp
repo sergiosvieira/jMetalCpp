@@ -82,7 +82,7 @@ Griewank::~Griewank()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Griewank::evaluate(Solution *solution)
+void Griewank::evaluate(ValuePtr solution)
 {
     Variable **decisionVariables = solution->getDecisionVariables();
 

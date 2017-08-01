@@ -50,7 +50,7 @@ EpsilonDominanceComparator::~EpsilonDominanceComparator()
  * @return -1, or 0, or 1 if o1 dominates o2, both are
  * non-dominated, or o1 is dominated by o2, respectively.
  */
-int EpsilonDominanceComparator::compare(void *o1, void *o2)
+int EpsilonDominanceComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1==nullptr)
@@ -58,8 +58,8 @@ int EpsilonDominanceComparator::compare(void *o1, void *o2)
     else if (o2 == nullptr)
         return -1;
 
-    Solution * solution1 = (Solution *) o1;
-    Solution * solution2 = (Solution *) o2;
+    Solution&  solution1 = CastValue(o1, Solution)->getData();
+    Solution&  solution2 = CastValue(o2, Solution)->getData();
 
     int dominate1 ; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
@@ -70,7 +70,7 @@ int EpsilonDominanceComparator::compare(void *o1, void *o2)
 
     int flag; //stores the result of the comparison
 
-    flag = overallConstraintViolationComparator_->compare(solution1,solution2);
+    flag = overallConstraintViolationComparator_->compare(o1, o2);
 
     if (flag != 0)
     {
@@ -79,10 +79,10 @@ int EpsilonDominanceComparator::compare(void *o1, void *o2)
 
     // Equal number of violated constraints. Applying a dominance Test then
     double value1, value2;
-    for (int i = 0; i < solution1->getNumberOfObjectives(); i++)
+    for (int i = 0; i < solution1.getNumberOfObjectives(); i++)
     {
-        value1 = solution1->getObjective(i);
-        value2 = solution2->getObjective(i);
+        value1 = solution1.getObjective(i);
+        value2 = solution2.getObjective(i);
 
         //Objetive implements comparable!!!
         if (value1/(1 + eta_) < value2)

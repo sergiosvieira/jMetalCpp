@@ -37,7 +37,7 @@ class Rastrigin : public Problem
 public:
     Rastrigin(std::string solutionType, int numberOfVariables = 10);
     ~Rastrigin();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
 private:
     static const double PI;

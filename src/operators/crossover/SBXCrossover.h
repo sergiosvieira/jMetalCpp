@@ -38,7 +38,7 @@ class SBXCrossover : public Crossover
 public:
     SBXCrossover(MapOfStringFunct parameters);
     ~SBXCrossover();
-    void *execute(void *);
+	ValuePtr execute(ValuePtr );
 
 protected:
     static const double ETA_C_DEFAULT_;
@@ -48,8 +48,8 @@ private:
     double crossoverProbability_;
     double distributionIndex_;
     //TODO: A�adir VALID_TYPES;
-    Solution ** doCrossover(double probability,
-                            Solution * parent1, Solution * parent2);
+	VectorOfValuePtr doCrossover(double probability,
+                           ValuePtr parent1, ValuePtr parent2);
 };
 
 #endif

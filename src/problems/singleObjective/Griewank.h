@@ -37,7 +37,7 @@ class Griewank : public Problem
 public:
     Griewank(std::string solutionType, int numberOfVariables = 10);
     ~Griewank();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 };
 
 #endif /* __GRIEWANK__ */

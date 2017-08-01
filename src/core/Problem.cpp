@@ -139,7 +139,7 @@ int Problem::getNumberOfConstraints()
  * object.
  * @param solution The <code>Solution</code> to evaluate.
  */
-void Problem::evaluateConstraints(Solution * solution)
+void Problem::evaluateConstraints(ValuePtr solution)
 {
     // The default behavior is to do nothing. Only constrained problems have to
     // re-define this method

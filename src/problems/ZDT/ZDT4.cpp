@@ -81,7 +81,7 @@ ZDT4::~ZDT4()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void ZDT4::evaluate(Solution *solution)
+void ZDT4::evaluate(ValuePtr solution)
 {
     XReal * x = new XReal(solution);
     double * fx = snew double[numberOfObjectives_] ;

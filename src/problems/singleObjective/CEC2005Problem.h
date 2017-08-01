@@ -46,7 +46,7 @@ private:
 public:
     CEC2005Problem(std::string solutionType, int problemID, int numberOfVariables = 10);
     ~CEC2005Problem();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 };
 
 #endif /* __CEC_2005_PROBLEM__ */

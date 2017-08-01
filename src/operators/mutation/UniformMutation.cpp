@@ -38,11 +38,11 @@ UniformMutation::UniformMutation(MapOfStringFunct parameters)
 {
     if (parameters["probability"] != nullptr)
     {
-        mutationProbability_ = *(double *) parameters["probability"];
+        mutationProbability_ = GetDoubleValue(parameters["probability"]);
     }
     if (parameters["perturbation"] != nullptr)
     {
-        perturbation_ = *(double *) parameters["perturbation"];
+        perturbation_ = GetDoubleValue(parameters["perturbation"]);
     }
 } // UniformMutation
 

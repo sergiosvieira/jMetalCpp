@@ -47,7 +47,7 @@ BestSolutionSelection::BestSolutionSelection(MapOfStringFunct parameters)
 * @param object Object representing a SolutionSet
 * @return the best solution found
 */
-void * BestSolutionSelection::execute(void * object)
+ValuePtr BestSolutionSelection::execute(ValuePtr object)
 {
 
     SolutionSet * solutionSet = (SolutionSet *)object;

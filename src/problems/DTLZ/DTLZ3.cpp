@@ -78,7 +78,7 @@ DTLZ3::~DTLZ3()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void DTLZ3::evaluate(Solution *solution)
+void DTLZ3::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
 

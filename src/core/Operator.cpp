@@ -52,7 +52,7 @@ Operator::~Operator() { /* do nothing */ }
  * @param name The parameter name.
  * @param value Object representing the parameter.
 **/
-void Operator::setParameter(std::string name, void *value)
+void Operator::setParameter(std::string name, ValuePtr value)
 {
     parameters_[name] = value;
 } // setParameter
@@ -63,7 +63,7 @@ void Operator::setParameter(std::string name, void *value)
  * @param name The parameter name.
  * @return the parameter.
 **/
-void * Operator::getParameter(std::string name)
+ValuePtr Operator::getParameter(std::string name)
 {
     return parameters_[name];
 }

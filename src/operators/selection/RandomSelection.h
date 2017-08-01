@@ -34,7 +34,7 @@ class RandomSelection : public Selection
 {
 
 private:
-    Comparator * comparator_;
+	SharedComparator comparator_ = nullptr;
 
 public:
     RandomSelection(MapOfStringFunct parameters);

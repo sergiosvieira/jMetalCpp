@@ -43,14 +43,14 @@ OMOPSO::OMOPSO(Problem *problem) : Algorithm(problem)
 void OMOPSO::initParams()
 {
 
-    particlesSize = *(int *) getInputParameter("swarmSize");
-    archiveSize   = *(int *) getInputParameter("archiveSize");
-    maxIterations = *(int *) getInputParameter("maxIterations");
+    particlesSize = GetIntValue(getInputParameter("swarmSize"));
+    archiveSize   = GetIntValue(getInputParameter("archiveSize"));
+    maxIterations = GetIntValue(getInputParameter("maxIterations"));
 
     iteration = 0;
 
     particles     = new SolutionSet(particlesSize);
-    best          = new Solution*[particlesSize];
+    //best          = new Solution*[particlesSize];
     leaders       = new CrowdingArchive(archiveSize,problem_->getNumberOfObjectives());
     eArchive      = new NonDominatedSolutionList(new EpsilonDominanceComparator(eta));
 
@@ -83,11 +83,6 @@ void OMOPSO::deleteParams()
     delete crowdingDistanceComparator;
     delete distance;
     delete particles;
-    for (int i = 0; i < particlesSize; i++)
-    {
-        delete best[i];
-    }
-    delete [] best;
     delete leaders;
     delete eArchive;
 
@@ -105,15 +100,15 @@ void OMOPSO::computeSpeed()
 
     for (int i = 0; i < particlesSize; i++)
     {
+		//Solution& sol = CastValue(solution_, Solution)->getData();
         XReal *particle     = new XReal(particles->get(i));
         XReal *bestParticle = new XReal(best[i]);
 
         //Select a global best for calculate the speed of particle i, bestGlobal
-        Solution *one, *two;
-        int pos1 = PseudoRandom::randInt(0,leaders->size()-1);
-        int pos2 = PseudoRandom::randInt(0,leaders->size()-1);
-        one = leaders->get(pos1);
-        two = leaders->get(pos2);
+        int pos1 = PseudoRandom::randInt(0, leaders->size()-1);
+        int pos2 = PseudoRandom::randInt(0, leaders->size()-1);
+        ValuePtr one = leaders->get(pos1);
+        ValuePtr two = leaders->get(pos2);
 
         if (crowdingDistanceComparator->compare(one,two) < 1)
         {
@@ -189,7 +184,7 @@ void OMOPSO::mopsoMutation(int actualIteration, int totalIterations)
     // There are three groups of particles_, the ones that are mutated with
     // a non-uniform mutation operator, the ones that are mutated with a
     // uniform mutation and the one that no are mutated
-    nonUniformMutation->setParameter("currentIteration", &actualIteration);
+    nonUniformMutation->setParameter("currentIteration", IntValue(actualIteration));
 
     for (int i = 0; i < particles->size(); i++)
     {

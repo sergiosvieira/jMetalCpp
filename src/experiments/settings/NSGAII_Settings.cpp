@@ -64,23 +64,23 @@ Algorithm * NSGAII_Settings::configure()
 {
 
     algorithm = new NSGAII(problem_);
-    algorithm->setInputParameter("populationSize",&populationSize_);
-    algorithm->setInputParameter("maxEvaluations",&maxEvaluations_);
+    algorithm->setInputParameter("populationSize", IntValue(populationSize_));
+    algorithm->setInputParameter("maxEvaluations", IntValue(maxEvaluations_));
 
     // Mutation and Crossover for Real codification
    MapOfStringFunct parameters;
 
     double crossoverProbability = crossoverProbability_;
     double crossoverDistributionIndex = crossoverDistributionIndex_ ;
-    parameters["probability"] =  &crossoverProbability;
-    parameters["distributionIndex"] = &crossoverDistributionIndex;
+    parameters["probability"] =  DoubleValue(crossoverProbability);
+    parameters["distributionIndex"] = DoubleValue(crossoverDistributionIndex);
     crossover = new SBXCrossover(parameters);
 
     parameters.clear();
     double mutationProbability = mutationProbability_;
     double mutationDistributionIndex = mutationDistributionIndex_;
-    parameters["probability"] = &mutationProbability;
-    parameters["distributionIndex"] = &mutationDistributionIndex;
+    parameters["probability"] = DoubleValue(mutationProbability);
+    parameters["distributionIndex"] = DoubleValue(mutationDistributionIndex);
     mutation = new PolynomialMutation(parameters);
 
     // Selection Operator

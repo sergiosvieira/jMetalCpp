@@ -79,7 +79,7 @@ ZDT6::~ZDT6()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void ZDT6::evaluate(Solution *solution)
+void ZDT6::evaluate(ValuePtr solution)
 {
     XReal * x = new XReal(solution);
 
@@ -88,9 +88,9 @@ void ZDT6::evaluate(Solution *solution)
     double g = evalG(x) ;
     double h = evalH(fx_[0], g) ;
     fx_[1] = h * g ;
-
-    solution->setObjective(0,fx_[0]);
-    solution->setObjective(1,fx_[1]);
+	Solution& sol = CastValue(solution, Solution)->getData();
+    sol.setObjective(0,fx_[0]);
+    sol.setObjective(1,fx_[1]);
 
     delete x ;
 } // evaluate

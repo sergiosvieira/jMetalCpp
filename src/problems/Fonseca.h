@@ -38,7 +38,7 @@ class Fonseca : public Problem
 public:
     Fonseca(std::string solutionType);
     ~Fonseca();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 };
 
 #endif

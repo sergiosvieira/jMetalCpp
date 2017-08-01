@@ -41,7 +41,7 @@ private:
 
 public:
     ZDT4(std::string solutionType, int numberOfVariables = 10);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
     virtual ~ZDT4();
 };
 

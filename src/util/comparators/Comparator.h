@@ -34,8 +34,7 @@ class Comparator
 
 public:
     virtual ~Comparator();
-    virtual int compare(void * one, void * two) = 0;
-
+    virtual int compare(ValuePtr one, ValuePtr two) = 0;
 };
 
 #endif

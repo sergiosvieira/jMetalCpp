@@ -29,7 +29,7 @@
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
 **/
-int CrowdingDistanceComparator::compare(void *o1, void *o2)
+int CrowdingDistanceComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1 == nullptr)
@@ -37,8 +37,8 @@ int CrowdingDistanceComparator::compare(void *o1, void *o2)
     else if (o2 == nullptr)
         return -1;
 
-    double distance1 = ((Solution *) o1)->getCrowdingDistance();
-    double distance2 = ((Solution *) o2)->getCrowdingDistance();
+    double distance1 = CastValue(o1, Solution)->getData().getCrowdingDistance();
+    double distance2 = CastValue(o2, Solution)->getData().getCrowdingDistance();
     if (distance1 >  distance2)
         return -1;
 

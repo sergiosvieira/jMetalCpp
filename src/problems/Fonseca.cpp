@@ -86,7 +86,7 @@ Fonseca::~Fonseca()
 /**
   * Evaluates a solution
   */
-void Fonseca::evaluate(Solution *solution)
+void Fonseca::evaluate(ValuePtr solution)
 {
     double *fx;
     double *x ;

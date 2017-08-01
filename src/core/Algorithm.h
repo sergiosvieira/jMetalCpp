@@ -49,10 +49,10 @@ public:
     // of an algorithm
     void addOperator(std::string name, Operator *operator_);
     Operator * getOperator(std::string name);
-    void setInputParameter(std::string name, void *value);
-    void * getInputParameter(std::string name);
-    void setOutputParameter(std::string name, void *value);
-    void * getOutputParameter(std::string name);
+    void setInputParameter(std::string name, ValuePtr value);
+    ValuePtr getInputParameter(std::string name);
+    void setOutputParameter(std::string name, ValuePtr value);
+    ValuePtr getOutputParameter(std::string name);
     Problem * getProblem();
 
 protected:

@@ -41,7 +41,7 @@ private:
 public:
     DominanceComparator();
     ~DominanceComparator();
-    int compare(void *one, void *two);
+	int compare(ValuePtr o1, ValuePtr o2);
 };
 
 #endif

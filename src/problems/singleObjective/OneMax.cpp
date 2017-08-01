@@ -46,7 +46,7 @@ OneMax::~OneMax()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void OneMax::evaluate(Solution * solution)
+void OneMax::evaluate(ValuePtr solution)
 {
     Binary * variable ;
     int    counter  ;

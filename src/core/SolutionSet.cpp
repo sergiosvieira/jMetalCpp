@@ -49,10 +49,6 @@ SolutionSet::SolutionSet (int maximumSize)
  */
 SolutionSet::~SolutionSet()
 {
-    for (int i = 0; i < solutionsList_.size(); i++)
-    {
-        delete solutionsList_[i];
-    }
 } // ~SolutionSet
 
 
@@ -62,14 +58,14 @@ SolutionSet::~SolutionSet()
  * @return True If the <code>Solution</code> has been inserted, false
  * otherwise.
  */
-bool SolutionSet::add(Solution * solution)
+bool SolutionSet::add(ValuePtr solution)
 {
     if (solutionsList_.size() >= capacity_)
     {
         std::cout << "Error in class SolutionSet the maximum capacity of the set has been reached" << std::endl;
         exit(-1);
     }
-    solutionsList_.push_back(solution);
+    solutionsList_.push_back(CastValue(solution, Solution));
     return true;
 } // add
 
@@ -81,9 +77,9 @@ bool SolutionSet::add(Solution * solution)
  * @return True If the <code>Solution</code> has been inserted, false
  * otherwise.
  */
-bool SolutionSet::add(int index, Solution * solution)
+bool SolutionSet::add(int index, ValuePtr solution)
 {
-    solutionsList_.insert(solutionsList_.begin()+index, solution);
+    solutionsList_.insert(solutionsList_.begin()+index, CastValue(solution, Solution));
     return true;
 }
 
@@ -93,7 +89,7 @@ bool SolutionSet::add(int index, Solution * solution)
  * @return The <code>Solution</code> at the position i.
  * @throws IndexOutOfBoundsException.
  */
-Solution * SolutionSet::get(int i)
+ValuePtr SolutionSet::get(int i)
 {
     if (i < 0 || i >= solutionsList_.size())
     {
@@ -118,7 +114,7 @@ int SolutionSet::getMaxSize()
  * Sorts a SolutionSet using a <code>Comparator</code>.
  * @param comparator <code>Comparator</code> used to sort.
  */
-void SolutionSet::sort(Comparator * comparator)
+void SolutionSet::sort(SharedComparator comparator)
 {
     if (comparator == nullptr)
     {
@@ -131,7 +127,7 @@ void SolutionSet::sort(Comparator * comparator)
         {
             if ((comparator->compare(solutionsList_[i],solutionsList_[j]))==1)
             {
-                Solution *tmp = solutionsList_[i];
+                ValuePtr tmp = solutionsList_[i];
                 solutionsList_[i] = solutionsList_[j];
                 solutionsList_[j] = tmp;
             }
@@ -147,15 +143,15 @@ void SolutionSet::sort(Comparator * comparator)
  * @return The index of the best Solution attending to the comparator or
  * <code>-1<code> if the SolutionSet is empty
  */
-int SolutionSet::indexBest(Comparator *comparator)
+int SolutionSet::indexBest(SharedComparator comparator)
 {
     if (solutionsList_.empty())
     {
         return -1;
     }
     int index = 0;
-    Solution * bestKnown = solutionsList_[0];
-    Solution * candidateSolution;
+    ValuePtr bestKnown = solutionsList_[0];
+    ValuePtr candidateSolution;
     int flag;
     for (int i = 1; i < solutionsList_.size(); i++)
     {
@@ -179,7 +175,7 @@ int SolutionSet::indexBest(Comparator *comparator)
  * @return The best Solution attending to the comparator or <code>null<code>
  * if the SolutionSet is empty
  */
-Solution * SolutionSet::best(Comparator * comparator)
+ValuePtr SolutionSet::best(SharedComparator comparator)
 {
     int indexBest = this->indexBest(comparator);
     if (indexBest < 0)
@@ -200,15 +196,15 @@ Solution * SolutionSet::best(Comparator * comparator)
  * @return The index of the worst Solution attending to the comparator or
  * <code>-1<code> if the SolutionSet is empty
  */
-int SolutionSet::indexWorst(Comparator * comparator)
+int SolutionSet::indexWorst(SharedComparator comparator)
 {
     if (solutionsList_.empty())
     {
         return -1;
     }
     int index = 0;
-    Solution * worstKnown = solutionsList_[0];
-    Solution * candidateSolution;
+    ValuePtr worstKnown = solutionsList_[0];
+    ValuePtr candidateSolution;
     int flag;
     for (int i = 1; i < solutionsList_.size(); i++)
     {
@@ -231,7 +227,7 @@ int SolutionSet::indexWorst(Comparator * comparator)
  * @return The worst Solution attending to the comparator or <code>null<code>
  * if the SolutionSet is empty
  */
-Solution * SolutionSet::worst(Comparator * comparator)
+ValuePtr SolutionSet::worst(SharedComparator comparator)
 {
     int index = indexWorst(comparator);
     if (index < 0)
@@ -266,10 +262,11 @@ void SolutionSet::printObjectivesToFile(std::string file)
     std::cout.setf(ios::fixed);
     for (int i = 0; i < solutionsList_.size(); i++)
     {
-        int nObj = solutionsList_[i]->getNumberOfObjectives();
+		Solution& solution = CastValue(solutionsList_[i], Solution)->getData();
+        int nObj = solution.getNumberOfObjectives();
         for (int obj = 0; obj < nObj; obj++)
         {
-            out << solutionsList_[i]->getObjective(obj) << " ";
+            out << solution.getObjective(obj) << " ";
             //std::cout << setprecision(15) << solutionsList_[i]->getObjective(obj) << " ";
         }
         out << std::endl;
@@ -294,10 +291,11 @@ void SolutionSet::printObjectivesToFile(std::string file, bool append)
         std::cout.setf(ios::fixed);
         for (int i = 0; i < solutionsList_.size(); i++)
         {
-            int nObj = solutionsList_[i]->getNumberOfObjectives();
+			Solution& solution = CastValue(solutionsList_[i], Solution)->getData();
+            int nObj = solution.getNumberOfObjectives();
             for (int obj = 0; obj < nObj; obj++)
             {
-                out << solutionsList_[i]->getObjective(obj) << " ";
+                out << solution.getObjective(obj) << " ";
             }
             out << std::endl;
         }
@@ -320,7 +318,8 @@ void SolutionSet::printVariablesToFile(std::string file)
     std::ofstream out(file.c_str());
     for (int i = 0; i < solutionsList_.size(); i++)
     {
-        out << solutionsList_[i]->toString() << std::endl ;
+		Solution& solution = CastValue(solutionsList_[i], Solution)->getData();
+        out << solution.toString() << std::endl ;
     }
     out.close();
 } // printVariablesToFile
@@ -338,7 +337,8 @@ void SolutionSet::printVariablesToFile(std::string file, bool append)
         std::fstream out(file.c_str(), std::ios::out | std::ios::app);
         for (int i = 0; i < solutionsList_.size(); i++)
         {
-            out << solutionsList_[i]->toString() << std::endl ;
+			Solution& solution = CastValue(solutionsList_[i], Solution)->getData();
+            out << solution.toString() << std::endl ;
         }
         out.close();
     }
@@ -385,11 +385,11 @@ SolutionSet * SolutionSet::join(SolutionSet *another)
         new SolutionSet(solutionsList_.size()+another->size());
     for (int i=0; i<solutionsList_.size(); i++)
     {
-        result->add(new Solution(this->get(i)));
+		result->add(MakeShared(Solution, this->get(i)));
     }
     for (int i=0; i<another->size(); i++)
     {
-        result->add(new Solution(another->get(i)));
+		result->add(MakeShared(Solution, another->get(i)));
     }
     return result;
 } // join
@@ -400,7 +400,7 @@ SolutionSet * SolutionSet::join(SolutionSet *another)
  * @param position The position of the solution to replace
  * @param solution The new solution
  */
-void SolutionSet::replace(int position, Solution *solution)
+void SolutionSet::replace(int position, ValuePtr solution)
 {
     if (position < 0 || position >= solutionsList_.size())
     {
@@ -415,16 +415,17 @@ void SolutionSet::replace(int position, Solution *solution)
  * Copies the objectives of the solution set to a matrix
  * @return A matrix containing the objectives
  */
-std::vector <VectorOfDouble > SolutionSet::writeObjectivesToMatrix()
+MatrixOfDouble SolutionSet::writeObjectivesToMatrix()
 {
-    std::vector <VectorOfDouble > objectives;
+    MatrixOfDouble objectives;
     //objectives = snew double[size()][get(0).numberOfObjectives()];
     for (int i = 0; i < size(); i++)
     {
         VectorOfDouble list;
-        for (int j = 0; j < get(0)->getNumberOfObjectives(); j++)
+		Solution& solution = CastValue(get(0), Solution)->getData();
+        for (int j = 0; j < solution.getNumberOfObjectives(); j++)
         {
-            list.push_back(get(i)->getObjective(j));
+            list.push_back(solution.getObjective(j));
         }
         objectives.push_back(list);
     }
@@ -436,6 +437,7 @@ void SolutionSet::printObjectives()
 {
     for (int i = 0; i < solutionsList_.size(); i++)
     {
-        std::cout << solutionsList_.at(i)->toString() << std::endl;
+		Solution& solution = CastValue(get(i), Solution)->getData();
+        std::cout << solution.toString() << std::endl;
     }
 }

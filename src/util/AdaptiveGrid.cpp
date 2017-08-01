@@ -64,16 +64,17 @@ void AdaptiveGrid::updateLimits(SolutionSet * solutionSet)
     //Find the max and min limits of objetives into the population
     for (int ind = 0; ind < solutionSet->size(); ind++)
     {
-        Solution * tmpIndividual = solutionSet->get(ind);
+        //Solution * tmpIndividual = solutionSet->get(ind);
+		Solution& tmpIndividual = GetValue(solutionSet->get(ind), Solution);
         for (int obj = 0; obj < objectives_; obj++)
         {
-            if (tmpIndividual->getObjective(obj) < lowerLimits_[obj])
+            if (tmpIndividual.getObjective(obj) < lowerLimits_[obj])
             {
-                lowerLimits_[obj] = tmpIndividual->getObjective(obj);
+                lowerLimits_[obj] = tmpIndividual.getObjective(obj);
             }
-            if (tmpIndividual->getObjective(obj) > upperLimits_[obj])
+            if (tmpIndividual.getObjective(obj) > upperLimits_[obj])
             {
-                upperLimits_[obj] = tmpIndividual->getObjective(obj);
+                upperLimits_[obj] = tmpIndividual.getObjective(obj);
             }
         } // for
     } // for
@@ -89,7 +90,7 @@ void AdaptiveGrid::updateLimits(SolutionSet * solutionSet)
 
 void AdaptiveGrid::addSolutionSet(SolutionSet * solutionSet)
 {
-    //Calculate the location of all individuals and update the grid
+    //Calculates the location of all individuals and update the grid
     mostPopulated_ = 0;
     int location_;
 
@@ -141,7 +142,7 @@ void AdaptiveGrid::updateGrid(SolutionSet * solutionSet)
  * @param solution <code>Solution</code> considered to update the grid.
  * @param solutionSet <code>SolutionSet</code> used to update the grid.
  */
-void AdaptiveGrid::updateGrid(Solution * solution, SolutionSet * solutionSet, int eval)
+void AdaptiveGrid::updateGrid(ValuePtr solution, SolutionSet * solutionSet, int eval)
 {
 
     int location_ = location(solution);
@@ -153,10 +154,10 @@ void AdaptiveGrid::updateGrid(Solution * solution, SolutionSet * solutionSet, in
         //Actualize the lower and upper limits whit the individual
         for (int obj = 0; obj < objectives_; obj++)
         {
-            if (solution->getObjective(obj) < lowerLimits_[obj])
-                lowerLimits_[obj] = solution->getObjective(obj);
-            if (solution->getObjective(obj) > upperLimits_[obj])
-                upperLimits_[obj] = solution->getObjective(obj);
+            if (GetValue(solution, Solution).getObjective(obj) < lowerLimits_[obj])
+                lowerLimits_[obj] = GetValue(solution, Solution).getObjective(obj);
+            if (GetValue(solution, Solution).getObjective(obj) > upperLimits_[obj])
+                upperLimits_[obj] = GetValue(solution, Solution).getObjective(obj);
         } // for
 
         //Calculate the division size
@@ -182,7 +183,8 @@ void AdaptiveGrid::updateGrid(Solution * solution, SolutionSet * solutionSet, in
  * Calculates the hypercube of a solution.
  * @param solution The <code>Solution</code>.
  */
-int AdaptiveGrid::location(Solution * solution)
+//int AdaptiveGrid::location(Solution * solution)
+int AdaptiveGrid::location(ValuePtr solution)
 {
     //Create a int [] to store the range of each objetive
     int * position = snew int[objectives_];
@@ -193,20 +195,22 @@ int AdaptiveGrid::location(Solution * solution)
 
         position[obj] = 0; //Inicialize
 
-        if ((solution->getObjective(obj) > upperLimits_[obj])
-                || (solution->getObjective(obj) < lowerLimits_[obj]))
+        //if ((solution->getObjective(obj) > upperLimits_[obj])
+		if ((GetValue(solution, Solution).getObjective(obj) > upperLimits_[obj])
+                //|| (solution->getObjective(obj) < lowerLimits_[obj]))
+			|| (GetValue(solution, Solution).getObjective(obj) < lowerLimits_[obj]))
         {
             delete [] position;
             return -1;
         }
-        else if (solution->getObjective(obj) ==lowerLimits_[obj])
+        else if (GetValue(solution, Solution).getObjective(obj) ==lowerLimits_[obj])
             position[obj] = 0;
-        else if (solution->getObjective(obj) ==upperLimits_[obj])
+        else if (GetValue(solution, Solution).getObjective(obj) ==upperLimits_[obj])
             position[obj] = ((int)pow(2.0,bisections_))-1;
         else
         {
             double tmpSize = divisionSize_[obj];
-            double value   = solution->getObjective(obj);
+            double value   = GetValue(solution, Solution).getObjective(obj);
             double account = lowerLimits_[obj];
             int ranges     = (int) pow(2.0,bisections_);
             for (int b = 0; b < bisections_; b++)

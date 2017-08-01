@@ -38,7 +38,7 @@ private:
 
 public:
     ZDT1(std::string solutionType, int numberOfVariables = 30);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
     ~ZDT1();
 };

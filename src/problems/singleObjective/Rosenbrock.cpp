@@ -75,7 +75,7 @@ Rosenbrock::~Rosenbrock()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Rosenbrock::evaluate(Solution *solution)
+void Rosenbrock::evaluate(ValuePtr solution)
 {
     //double fx [numberOfObjectives_] ;
     //double x [numberOfVariables_];

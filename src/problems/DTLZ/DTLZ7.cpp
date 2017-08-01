@@ -79,7 +79,7 @@ DTLZ7::~DTLZ7()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void DTLZ7::evaluate(Solution *solution)
+void DTLZ7::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
     double g = 0.0;

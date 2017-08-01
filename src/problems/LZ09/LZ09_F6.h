@@ -35,7 +35,7 @@ class LZ09_F6 : public Problem
 {
 public:
     LZ09_F6(std::string solutionType, int ptype=31, int dtype=1, int ltype=32);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
     virtual ~LZ09_F6();
 private:

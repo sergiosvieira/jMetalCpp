@@ -33,10 +33,10 @@ class WorstSolutionSelection : public Selection
 {
 
 private:
-    Comparator * comparator_;
+	SharedValue(Comparator) comparator_ = nullptr;
 
 public:
-    WorstSolutionSelection(map<string, void *> parameters);
+    WorstSolutionSelection(map<string, ValuePtr> parameters);
     void *execute(void *);
 
 };

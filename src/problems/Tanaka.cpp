@@ -86,10 +86,10 @@ Tanaka::~Tanaka()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Tanaka::evaluate(Solution *solution)
+void Tanaka::evaluate(ValuePtr solution)
 {
-
-    Variable **variables = solution->getDecisionVariables();
+	Solution& sol = CastValue(solution, Solution)->getData();
+    Variable **variables = sol.getDecisionVariables();
 
     double * fx = snew double[numberOfObjectives_];
     if (fx == nullptr)
@@ -101,8 +101,8 @@ void Tanaka::evaluate(Solution *solution)
     fx[0] = variables[0]->getValue();
     fx[1] = variables[1]->getValue();
 
-    solution->setObjective(0,fx[0]);
-    solution->setObjective(1,fx[1]);
+    sol.setObjective(0,fx[0]);
+    sol.setObjective(1,fx[1]);
 
     delete[]fx ;
 
@@ -112,13 +112,13 @@ void Tanaka::evaluate(Solution *solution)
  * Evaluates the constraint overhead of a solution
  * @param solution The solution
  */
-void Tanaka::evaluateConstraints(Solution *solution)
+void Tanaka::evaluateConstraints(ValuePtr solution)
 {
 
     double * constraint = snew double[this->getNumberOfConstraints()];
-
-    double x1 = solution->getDecisionVariables()[0]->getValue();
-    double x2 = solution->getDecisionVariables()[1]->getValue();
+	Solution& sol = CastValue(solution, Solution)->getData();
+    double x1 = sol.getDecisionVariables()[0]->getValue();
+    double x2 = sol.getDecisionVariables()[1]->getValue();
 
     constraint[0] = (x1*x1 + x2*x2 - 1.0 - 0.1*cos(16.0*atan(x1/x2)));
     constraint[1] = - 2.0 * ( (x1-0.5)*(x1-0.5) + (x2-0.5)*(x2-0.5) - 0.5);
@@ -136,8 +136,8 @@ void Tanaka::evaluateConstraints(Solution *solution)
 
     delete [] constraint;
 
-    solution->setOverallConstraintViolation(total);
-    solution->setNumberOfViolatedConstraints(number);
+    sol.setOverallConstraintViolation(total);
+    sol.setNumberOfViolatedConstraints(number);
 
 } // evaluateConstraints
 

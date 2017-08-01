@@ -44,9 +44,9 @@ SBXCrossover::SBXCrossover(MapOfStringFunct parameters)
     //TODO: crossoverProbability_ = nullptr;
     distributionIndex_ = ETA_C_DEFAULT_;
     if (parameters["probability"] != nullptr)
-        crossoverProbability_ = *(double *)parameters["probability"];
+		crossoverProbability_ = DoubleValue(parameters["probability"]);
     if (parameters["distributionIndex"] != nullptr)
-        distributionIndex_ = *(double *)parameters["distributionIndex"];
+        distributionIndex_ = DoubleValue(parameters["distributionIndex"]);
 } // SBXCrossover
 
 
@@ -63,25 +63,12 @@ SBXCrossover::~SBXCrossover() { } // ~SBXCrossover
 * @param parent2 The second parent
 * @return An array containing the two offsprings
 **/
-Solution ** SBXCrossover::doCrossover(double probability, Solution *parent1, Solution *parent2)
+VectorOfValuePtr SBXCrossover::doCrossover(double probability, ValuePtr parent1, ValuePtr parent2)
 {
+	VectorOfValuePtr offSpring(2);
 
-    Solution** offSpring = new Solution*[2];
-
-    if (offSpring == nullptr)
-    {
-        std::cout << "Error grave: Impossible reserve memory for allocating new solutions when performing SBXCrossover " << std::endl;
-        exit(-1);
-    }
-
-//  std::cout << "SBXCrossover: AggregativeValue de parent1 = " << parent1->getAggregativeValue() << std::endl;
-//  std::cout << "SBXCrossover: AggregativeValue de parent2 = " << parent2->getAggregativeValue() << std::endl;
-
-    offSpring[0] = new Solution(parent1);
-    offSpring[1] = new Solution(parent2);
-
-//  std::cout << "SBXCrossover: AggregativeValue de offSpring[0] = " << offSpring[0]->getAggregativeValue() << std::endl;
-//  std::cout << "SBXCrossover: AggregativeValue de offSpring[1] = " << offSpring[1]->getAggregativeValue() << std::endl;
+    offSpring[0] = MakeShared(Solution, Solution(GetValue(parent1, Solution)));
+    offSpring[1] = MakeShared(Solution, Solution(GetValue(parent2, Solution)));
 
     int i;
     double rand;
@@ -204,22 +191,13 @@ Solution ** SBXCrossover::doCrossover(double probability, Solution *parent1, Sol
 * @param object An object containing an array of two parents
 * @return An object containing the offSprings
 */
-void * SBXCrossover::execute(void *object)
+ValuePtr SBXCrossover::execute(ValuePtr object)
 {
-
-//  double probability = *(double *)getParameter("probability");
-
-    Solution ** parents = (Solution **) object;
+	VectorOfValuePtr parents = GetValue(object, VectorOfValuePtr);
+    //Solution ** parents = (Solution **) object;
     // TODO: Comprobar la longitud de parents
     // TODO: Chequear el tipo de parents
-
-    Solution ** offSpring = (Solution **)doCrossover(crossoverProbability_, parents[0], parents[1]);
-
-//  for (int i = 0; i < 2; i++) // this operator will return only 2 offpsrings
-//  {
-//    offSpring[i]->setCrowdingDistance(0.0);
-//    offSpring[i]->setRank(0);
-//  }
-
-    return offSpring;
+	VectorOfValuePtr offSpring = doCrossover(crossoverProbability_, parents[0], parents[1]);
+	ValuePtr result = MakeShared(VectorOfValuePtr, offSpring);
+    return result;
 } // execute

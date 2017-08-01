@@ -64,8 +64,8 @@ Algorithm * ssGA_Settings::configure()
 {
 
     algorithm = new ssGA(problem_);
-    algorithm->setInputParameter("populationSize",&populationSize_);
-    algorithm->setInputParameter("maxEvaluations",&maxEvaluations_);
+    algorithm->setInputParameter("populationSize", IntValue(populationSize_));
+    algorithm->setInputParameter("maxEvaluations", IntValue(maxEvaluations_));
 
     // Mutation and Crossover for Real codification
    MapOfStringFunct parameters;

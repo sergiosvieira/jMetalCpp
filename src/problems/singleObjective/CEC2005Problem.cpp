@@ -135,9 +135,10 @@ CEC2005Problem::~CEC2005Problem()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void CEC2005Problem::evaluate(Solution *solution)
+void CEC2005Problem::evaluate(ValuePtr solution)
 {
-    Variable ** decisionVariables  = solution->getDecisionVariables();
+	Solution& sol = CastValue(solution, Solution)->getData();
+    Variable ** decisionVariables  = sol.getDecisionVariables();
     double * x = snew double[numberOfVariables_] ;
 
     for (int i = 0 ; i < numberOfVariables_; i++)
@@ -150,6 +151,6 @@ void CEC2005Problem::evaluate(Solution *solution)
 
     delete [] x;
 
-    solution->setObjective(0, result);
+    sol.setObjective(0, result);
 
 } // evaluate

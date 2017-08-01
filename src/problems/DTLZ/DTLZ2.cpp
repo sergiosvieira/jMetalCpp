@@ -81,7 +81,7 @@ DTLZ2::~DTLZ2()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void DTLZ2::evaluate(Solution *solution)
+void DTLZ2::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
 

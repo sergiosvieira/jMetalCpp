@@ -34,11 +34,11 @@ class SinglePointCrossover : public Crossover
 {
 
 public:
-    SinglePointCrossover(map<string, void *> parameters);
+    SinglePointCrossover(MapOfStringFunct parameters);
     void *execute(void *);
 
 private:
-    double crossoverProbability_;
+    double crossoverProbability_ = 0.0;
     Solution ** doCrossover(double probability,
                             Solution * parent1, Solution * parent2);
 };

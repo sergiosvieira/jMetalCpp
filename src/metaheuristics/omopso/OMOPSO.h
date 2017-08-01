@@ -73,7 +73,7 @@ private:
     /**
      * Stores the best solutions founds so far for each particles
      */
-    Solution **best;
+	VectorOfValuePtr best;
 
     /**
      * Stores the leaders

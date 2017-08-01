@@ -40,11 +40,10 @@ StandardPSO2011::StandardPSO2011(Problem * problem) : Algorithm(problem)
     C_ = 1.0/2.0 + log(2) ; //1.193;
     ChVel_ = -0.5 ;
 
-    comparator_ = new ObjectiveComparator(0) ; // Single objective comparator
+    comparator_ = MakeShared(ObjectiveComparator, ObjectiveComparator(0)); // Single objective comparator
    MapOfStringFunct parameters ; // Operator parameters
-
     parameters["comparator"] = comparator_;
-    findBestSolution_ = new BestSolutionSelection(parameters) ;
+    findBestSolution_ = MakeShared(BestSolutionSelection, BestSolutionSelection(parameters));
 
     evaluations_ = 0 ;
 } // StandardPSO2011
@@ -55,8 +54,7 @@ StandardPSO2011::StandardPSO2011(Problem * problem) : Algorithm(problem)
  */
 StandardPSO2011::~StandardPSO2011()
 {
-    delete comparator_;
-    delete findBestSolution_;
+
 } // ~StandardPSO2011
 
 
@@ -77,17 +75,15 @@ double StandardPSO2011::getC()
  */
 void StandardPSO2011::initParams()
 {
-    swarmSize_ = *(int *) getInputParameter("swarmSize");
-    maxIterations_ = *(int *) getInputParameter("maxIterations");
-    numberOfParticlesToInform_ = *(int *) getInputParameter("numberOfParticlesToInform");
+    swarmSize_ = IntValue(getInputParameter("swarmSize"));
+    maxIterations_ = IntValue(getInputParameter("maxIterations"));
+    numberOfParticlesToInform_ = IntValue(getInputParameter("numberOfParticlesToInform"));
 
     std::cout << "Swarm size: " << swarmSize_ << std::endl;
 
     iteration_ = 0;
 
     swarm_ = new SolutionSet(swarmSize_);
-    localBest_ = new Solution*[swarmSize_];
-    neighborhoodBest_ = new Solution*[swarmSize_];
 
     // Create the speed_ vector
     speed_ = snew double*[swarmSize_];
@@ -100,21 +96,21 @@ void StandardPSO2011::initParams()
 void StandardPSO2011::deleteParams()
 {
     delete swarm_;
-    delete [] localBest_;
-    delete [] neighborhoodBest_;
     delete [] speed_;
 } // deleteParams
 
 
-Solution * StandardPSO2011::getNeighborBest(int i)
+ValuePtr StandardPSO2011::getNeighborBest(int i)
 {
-    Solution * bestLocalBestSolution = nullptr ;
-
+    ValuePtr bestLocalBestSolution = nullptr ;	
     for (int index : neighborhood_->getNeighbors(i))
     {
-        if ((bestLocalBestSolution == nullptr) || (bestLocalBestSolution->getObjective(0) > localBest_[index]->getObjective(0)))
+		SharedValue(Solution) solution1 = CastValue(bestLocalBestSolution, Solution);
+		SharedValue(Solution) solution2 = CastValue(localBest_[index], Solution);
+        if ((bestLocalBestSolution == nullptr) 
+			|| (solution1->getData().getObjective(0) > solution2->getData().getObjective(0)))
         {
-            bestLocalBestSolution = localBest_[index] ;
+            bestLocalBestSolution = localBest_[index];
         }
     }
 
@@ -130,10 +126,11 @@ void StandardPSO2011::computeSpeed()
         XReal * particle = new XReal(swarm_->get(i)) ;
         XReal * localBest = new XReal(localBest_[i]) ;
         XReal * neighborhoodBest = new XReal(neighborhoodBest_[i]) ;
-
-        Solution * gravityCenterSolution = new Solution(problem_);
-        XReal * gravityCenter = new XReal(gravityCenterSolution) ;
-        Solution * randomParticleSolution = new Solution(swarm_->get(i));
+		ValuePtr gravityCenterSolution = MakeShared(Solution, Solution(problem_));
+        XReal * gravityCenter = new XReal(gravityCenterSolution);
+        //Solution * randomParticleSolution = new Solution(swarm_->get(i));
+		Solution& sol = CastValue(swarm_->get(i), Solution)->getData();
+		ValuePtr randomParticleSolution = MakeShared(Solution, Solution(sol));
         XReal * randomParticle = new XReal (randomParticleSolution) ;
 
         if (localBest_[i] != neighborhoodBest_[i])
@@ -178,11 +175,8 @@ void StandardPSO2011::computeSpeed()
 
         delete particle;
         delete localBest;
-        delete neighborhoodBest;
-
-        delete gravityCenterSolution;
-        delete gravityCenter;
-        delete randomParticleSolution;
+        delete neighborhoodBest;        
+        delete gravityCenter;        
         delete randomParticle;
 
     }
@@ -230,7 +224,8 @@ SolutionSet * StandardPSO2011::execute()
     // Step 1 Create the initial population and evaluate
     for (int i = 0; i < swarmSize_; i++)
     {
-        Solution * particle = new Solution(problem_);
+        //Solution * particle = new Solution(problem_);
+		SharedSolution particle = MakeShared(Solution, Solution(problem_));
         problem_->evaluate(particle);
         evaluations_ ++ ;
         swarm_->add(particle);
@@ -259,7 +254,8 @@ SolutionSet * StandardPSO2011::execute()
     //-> Step 6. Initialize the memory of each particle
     for (int i = 0; i < swarm_->size(); i++)
     {
-        Solution * particle = new Solution(swarm_->get(i));
+		Solution& sol = CastValue(swarm_->get(i), Solution)->getData();
+		SharedSolution particle = MakeShared(Solution, Solution(sol));
         localBest_[i] = particle;
     }
 
@@ -274,18 +270,20 @@ SolutionSet * StandardPSO2011::execute()
     {
         std::cout << neighborhood_->getNeighbors(0).at(i) << ",";
     }
-    std::cout << neighborhood_->getNeighbors(0).back() << "]" << std::endl;
+    std::cout << neighborhood_->getNeighbors(0).back() << "]" << std::endl;	
     for (int s :  neighborhood_->getNeighbors(0))
     {
-        std::cout << s << ": " << localBest_[s]->getObjective(0) << std::endl;
+		Solution& sol = CastValue(localBest_[s], Solution)->getData();
+        std::cout << s << ": " << sol.getObjective(0) << std::endl;
     }
-
-    std::cout << "localBest_i " << localBest_[0]->getObjective(0) << std::endl;
-    std::cout << "neighborhoodBest_i " << getNeighborBest(0)->getObjective(0) << std::endl;
+	Solution& localBestSolution = CastValue(localBest_[0], Solution)->getData();
+    std::cout << "localBest_i " << localBestSolution.getObjective(0) << std::endl;
+	Solution& neighborSolution = CastValue(getNeighborBest(0), Solution)->getData();
+    std::cout << "neighborhoodBest_i " << neighborSolution.getObjective(0) << std::endl;
 
     std::cout << "Swarm: " << swarm_ << std::endl;
-    swarm_->printObjectives();
-    double b = swarm_->best(comparator_)->getObjective(0) ;
+	Solution& bestSolution = CastValue(swarm_->best(comparator_), Solution)->getData();
+    double b = bestSolution.getObjective(0) ;
     std::cout << "Best: " << b << std::endl;
 
     double bestFoundFitness = numeric_limits<double>::max();
@@ -301,18 +299,18 @@ SolutionSet * StandardPSO2011::execute()
         //Evaluate the new swarm_ in new positions
         for (int i = 0; i < swarm_->size(); i++)
         {
-            Solution * particle = swarm_->get(i);
-            problem_->evaluate(particle);
+            problem_->evaluate(swarm_->get(i));
             evaluations_ ++ ;
         }
 
         //Update the memory of the particles
         for (int i = 0; i < swarm_->size(); i++)
         {
-            if ((swarm_->get(i)->getObjective(0) < localBest_[i]->getObjective(0)))
+			Solution& currentSolution = CastValue(swarm_->get(i), Solution)->getData();
+			Solution& localBestSolution = CastValue(localBest_[i], Solution)->getData();
+            if ((currentSolution.getObjective(0) < localBestSolution.getObjective(0)))
             {
-                Solution * particle = new Solution(swarm_->get(i));
-                delete localBest_[i];
+				SharedSolution particle = MakeShared(Solution, Solution(currentSolution));
                 localBest_[i] = particle;
             } // if
         }
@@ -324,7 +322,8 @@ SolutionSet * StandardPSO2011::execute()
         iteration_++;
         //System.out.println("Swarm( " + iteration_+ "): " + swarm_) ;
         //swarm_.printObjectives();
-        double bestCurrentFitness = swarm_->best(comparator_)->getObjective(0) ;
+		bestSolution = CastValue(swarm_->best(comparator_), Solution)->getData();
+        double bestCurrentFitness = bestSolution.getObjective(0) ;
         //std::cout << "Best: " << bestCurrentFitness << std::endl;
 
         if (bestCurrentFitness == bestFoundFitness)
@@ -341,18 +340,16 @@ SolutionSet * StandardPSO2011::execute()
 
     // Return a population with the best individual
     SolutionSet * resultPopulation = new SolutionSet(1) ;
-    int * bestSolutionIdx = (int *) findBestSolution_->execute(swarm_);
-    resultPopulation->add(new Solution(swarm_->get(* bestSolutionIdx))) ;
-    delete bestSolutionIdx;
+	Operator& oper = CastValue(findBestSolution_, Operator)->getData();
+	SharedValue(SolutionSet) sharedSolutionSet = MakeShared(SolutionSet, swarm_);
+    int bestSolutionIdx = IntValue(oper.execute(sharedSolutionSet));
+	Solution& bestSolution = CastValue(swarm_->get(bestSolutionIdx), Solution)->getData();
+    resultPopulation->add(MakeShared(Solution, Solution(bestSolution)));
 
     // Free memory
     for (int i = 0; i < swarmSize_; i++)
     {
         delete [] speed_[i];
-    }
-    for (int i = 0; i < swarm_->size(); i++)
-    {
-        delete localBest_[i];
     }
     delete neighborhood_;
     deleteParams();

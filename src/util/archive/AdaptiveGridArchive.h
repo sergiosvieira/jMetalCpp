@@ -52,7 +52,7 @@ private:
 
 public:
     AdaptiveGridArchive(int maxSize,int bisections, int objectives);
-    bool add(Solution * solution, int eval);
+    bool add(ValuePtr solution, int eval);
     AdaptiveGrid * getGrid();
 };
 

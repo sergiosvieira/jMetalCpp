@@ -38,18 +38,18 @@ class XReal
 
 public:
     XReal();
-    XReal(Solution * solution);
+    XReal(ValuePtr solution);
     double getValue(int index);
     void setValue(int index, double value);
     double getLowerBound(int index);
     double getUpperBound(int index);
     int getNumberOfDecisionVariables();
     int size();
-    Solution * getSolution();
+    ValuePtr getSolution();
 
 private:
-    Solution * solution_;
-    SolutionType * type_;
+	ValuePtr solution_ = nullptr;
+    SolutionType * type_ = nullptr;
 
 };
 

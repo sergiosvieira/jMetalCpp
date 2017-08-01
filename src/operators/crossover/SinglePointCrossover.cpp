@@ -36,10 +36,10 @@
 SinglePointCrossover::SinglePointCrossover(MapOfStringFunct parameters)
     : Crossover(parameters)
 {
-    crossoverProbability_ = 0.0 ;
-    //TODO: crossoverProbability_ = nullptr;
     if (parameters["probability"] != nullptr)
-        crossoverProbability_ = *(double *)parameters["probability"];
+	{
+		crossoverProbability_ = GetDoubleValue(parameters["probability"]);
+	}
 } // SinglePointCrossover
 
 

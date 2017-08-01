@@ -29,11 +29,11 @@
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
  */
-int OverallConstraintViolationComparator::compare(void *o1, void *o2)
+int OverallConstraintViolationComparator::compare(ValuePtr o1, ValuePtr o2)
 {
-    double overall1, overall2;
-    overall1 = ((Solution *) o1)->getOverallConstraintViolation();
-    overall2 = ((Solution *) o2)->getOverallConstraintViolation();
+    double overall1, overall2;	
+    overall1 = CastValue(o1, Solution)->getData().getOverallConstraintViolation();
+    overall2 = CastValue(o2, Solution)->getData().getOverallConstraintViolation();
 
     if ((overall1 < 0) && (overall2 < 0))
     {

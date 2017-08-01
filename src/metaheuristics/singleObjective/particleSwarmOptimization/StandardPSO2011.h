@@ -48,8 +48,8 @@ private:
     int maxIterations_;
     int iteration_;
     int numberOfParticlesToInform_ ; // Referred a K in the SPSO document
-    Solution ** localBest_;
-    Solution ** neighborhoodBest_;
+    VectorOfValuePtr localBest_;
+	VectorOfValuePtr neighborhoodBest_;
     double ** speed_;
     AdaptiveRandomNeighborhood * neighborhood_ ;
 
@@ -58,9 +58,8 @@ private:
     /**
      * Comparator object
      */
-    Comparator  * comparator_  ;
-
-    Operator * findBestSolution_ ;
+	SharedComparator comparator_ = nullptr;
+	SharedOperator findBestSolution_ = nullptr;
 
     double W_;
     double C_;
@@ -68,7 +67,7 @@ private:
 
     void initParams();
     void deleteParams();
-    Solution * getNeighborBest(int i);
+    ValuePtr getNeighborBest(int i);
     void computeSpeed();
     void computeNewPositions();
 

@@ -36,7 +36,7 @@ class Rosenbrock : public Problem
 public:
     Rosenbrock(std::string solutionType, int numberOfVariables = 10);
     ~Rosenbrock();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 };
 
 #endif

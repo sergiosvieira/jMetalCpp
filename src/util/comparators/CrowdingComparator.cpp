@@ -49,7 +49,7 @@ CrowdingComparator::~CrowdingComparator()
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
 **/
-int CrowdingComparator::compare(void *o1, void *o2)
+int CrowdingComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1 == nullptr)
@@ -63,8 +63,8 @@ int CrowdingComparator::compare(void *o1, void *o2)
         return flagComparatorRank;
 
     /* His rank is equal, then distance crowding comparator */
-    double distance1 = ((Solution *) o1)->getCrowdingDistance();
-    double distance2 = ((Solution *) o2)->getCrowdingDistance();
+    double distance1 = CastValue(o1, Solution)->getData().getCrowdingDistance();
+    double distance2 = CastValue(o2, Solution)->getData().getCrowdingDistance();
     if (distance1 >  distance2)
         return -1;
 

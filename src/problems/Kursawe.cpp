@@ -95,7 +95,7 @@ Kursawe::~Kursawe()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Kursawe::evaluate(Solution *solution)
+void Kursawe::evaluate(ValuePtr solution)
 {
 
     XReal * vars = snew XReal(solution);

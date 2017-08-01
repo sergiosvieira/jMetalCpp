@@ -77,7 +77,7 @@ ZDT2::~ZDT2()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void ZDT2::evaluate(Solution *solution)
+void ZDT2::evaluate(ValuePtr solution)
 {
     XReal * x = new XReal(solution);
 

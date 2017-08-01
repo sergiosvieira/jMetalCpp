@@ -30,7 +30,7 @@ class OneMax : public Problem
 public:
     OneMax(int numberOfBits, int numberOfStrings = 1);
     ~OneMax();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
 };
 

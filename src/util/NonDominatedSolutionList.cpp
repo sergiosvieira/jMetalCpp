@@ -72,7 +72,7 @@ NonDominatedSolutionList::~NonDominatedSolutionList()
  * The decision variables can be null if the solution is read from a file; in
  * that case, the domination tests are omitted
  */
-bool NonDominatedSolutionList::add(Solution *solution)
+bool NonDominatedSolutionList::add(ValuePtrsolution)
 {
 
     int i = 0;

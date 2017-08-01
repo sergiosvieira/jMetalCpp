@@ -75,11 +75,12 @@ Sphere::~Sphere()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void Sphere::evaluate(Solution *solution)
+void Sphere::evaluate(ValuePtr solution)
 {
     //double fx [numberOfObjectives_] ;
     //double x [numberOfVariables_];
-    Variable **variables = solution->getDecisionVariables();
+	Solution& sol = CastValue(solution, Solution)->getData();
+    Variable **variables = sol.getDecisionVariables();
 
     double * fx = snew double[numberOfObjectives_]; //(double *)malloc(sizeof(double) * numberOfObjectives_);
     if (fx == nullptr)
@@ -107,7 +108,7 @@ void Sphere::evaluate(Solution *solution)
 
     fx[0] = sum ;
 
-    solution->setObjective(0,fx[0]);
+    sol.setObjective(0,fx[0]);
     delete[]fx ;
     delete[]x;
 } // evaluate

@@ -89,7 +89,7 @@ LZ09_F3::~LZ09_F3 ()
     delete LZ09_ ;
 }
 
-void LZ09_F3::evaluate(Solution * solution)
+void LZ09_F3::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
 

@@ -38,8 +38,7 @@ private:
 public:
     ObjectiveComparator(int nObj);
     ObjectiveComparator(int nObj, bool descendingOrder);
-    int compare(void * o1, void * o2);
-
+	int compare(ValuePtr o1, ValuePtr o2);
 };
 
 #endif

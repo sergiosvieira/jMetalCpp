@@ -60,7 +60,7 @@ public:
      * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
      * respectively.
      */
-    int compare(void *one, void *two);
+	int compare(ValuePtr o1, ValuePtr o2);
 };
 
 #endif

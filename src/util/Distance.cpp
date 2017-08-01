@@ -81,7 +81,7 @@ double ** Distance::distanceMatrix(SolutionSet * solutionSet)
  * @param solutionSet The <code>SolutionSet</code>.
  * @return The minimum distance between solution and the set.
  */
-double Distance::distanceToSolutionSetInObjectiveSpace(Solution *solution,
+double Distance::distanceToSolutionSetInObjectiveSpace(ValuePtr solution,
         SolutionSet * solutionSet)
 {
     //At start point the distance is the max
@@ -107,7 +107,7 @@ double Distance::distanceToSolutionSetInObjectiveSpace(Solution *solution,
  * @param solutionSet The <code>SolutionSet</code>.
  * @return The minimum distance between solution and the set.
  */
-double Distance::distanceToSolutionSetInSolutionSpace(Solution * solution,
+double Distance::distanceToSolutionSetInSolutionSpace(ValuePtr solution,
         SolutionSet * solutionSet)
 {
     //At start point the distance is the max
@@ -132,7 +132,7 @@ double Distance::distanceToSolutionSetInSolutionSpace(Solution * solution,
  * @param solutionJ The second <code>Solution</code>.
  * @return the distance between solutions.
  */
-double Distance::distanceBetweenSolutions(Solution * solutionI, Solution * solutionJ)
+double Distance::distanceBetweenSolutions(ValuePtr solutionI, ValuePtr solutionJ)
 {
     //->Obtain his decision variables
     Variable ** decisionVariableI = solutionI->getDecisionVariables();
@@ -159,7 +159,7 @@ double Distance::distanceBetweenSolutions(Solution * solutionI, Solution * solut
  * @param solutionJ The second <code>Solution</code>.
  * @return the distance between solutions in objective space.
  */
-double Distance::distanceBetweenObjectives(Solution * solutionI, Solution * solutionJ)
+double Distance::distanceBetweenObjectives(ValuePtr solutionI, ValuePtr solutionJ)
 {
     double diff;    //Auxiliar var
     double distance = 0.0;

@@ -49,7 +49,7 @@ class DifferentialEvolutionCrossover : public Crossover
 
 public:
     DifferentialEvolutionCrossover(MapOfStringFunct parameters);
-    void *execute(void *);
+    ValuePtr execute(ValuePtr);
 
 protected:
     static const double DEFAULT_CR;

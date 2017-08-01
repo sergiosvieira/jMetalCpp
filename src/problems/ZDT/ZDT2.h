@@ -39,7 +39,7 @@ private:
 
 public:
     ZDT2(std::string solutionType, int numberOfVariables = 30);
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
 
     virtual ~ZDT2();
 };

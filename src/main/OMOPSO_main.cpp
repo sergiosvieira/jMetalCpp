@@ -66,11 +66,11 @@ int main(int argc, char ** argv)
     int archiveSize = 100;
 
     // Algorithm parameters
-    algorithm->setInputParameter("swarmSize",&swarmSize);
-    algorithm->setInputParameter("archiveSize",&archiveSize);
-    algorithm->setInputParameter("maxIterations",&maxIterations);
-    parameters["probability"] =  &mutationProbability;
-    parameters["perturbation"] = &perturbationIndex;
+    algorithm->setInputParameter("swarmSize", IntValue(swarmSize));
+    algorithm->setInputParameter("archiveSize", IntValue(archiveSize));
+    algorithm->setInputParameter("maxIterations", IntValue(maxIterations));
+    parameters["probability"] =  DoubleValue(mutationProbability);
+    parameters["perturbation"] = DoubleValue(perturbationIndex);
     uniformMutation = snew UniformMutation(parameters);
     parameters.clear();
     parameters["probability"] =  &mutationProbability;

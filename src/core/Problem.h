@@ -63,9 +63,9 @@ public:
     void setNumberOfObjectives(int numberOfObjectives);
     double getLowerLimit(int i);
     double getUpperLimit(int i);
-    virtual void evaluate(Solution * solution) = 0;
+    virtual void evaluate(ValuePtr solution) = 0;
     int getNumberOfConstraints();
-    virtual void evaluateConstraints(Solution * solution);
+    virtual void evaluateConstraints(ValuePtr solution);
     int getPrecision(int var);
     int * getPrecision();
     void setPrecision(int * precision);

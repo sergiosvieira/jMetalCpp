@@ -88,8 +88,8 @@ public:
 
     void addSolutionSet(SolutionSet * solutionSet);
     void updateGrid(SolutionSet * solutionSet);
-    void updateGrid(Solution * solution, SolutionSet * solutionSet, int eval);
-    int location(Solution * solution);
+    void updateGrid(ValuePtr solution, SolutionSet * solutionSet, int eval);
+    int location(ValuePtr solution);
     int getMostPopulated();
     int getLocationDensity(int location);
     void removeSolution(int location);

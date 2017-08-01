@@ -42,7 +42,7 @@ class Srinivas : public Problem
 public:
     Srinivas(std::string solutionType);
     ~Srinivas();
-    void evaluate(Solution *solution);
+    void evaluate(ValuePtr solution);
     void evaluateConstraints(Solution * solution);
 };
 

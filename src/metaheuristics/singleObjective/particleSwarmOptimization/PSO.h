@@ -61,11 +61,11 @@ private:
     /**
      * Stores the local best solutions found so far for each particles
      */
-    Solution ** localBest_;
+    VectorOfValuePtr localBest_;
     /**
      * Stores the global best solution found
      */
-    Solution * globalBest_;
+    ValuePtr globalBest_;
     /**
      * Stores the speed_ of each particle
      */
@@ -80,7 +80,7 @@ private:
     /**
      * Comparator object
      */
-    Comparator * comparator_  ;
+	SharedComparator comparator_ = nullptr;
 
     Operator * findBestSolution_ ;
 

@@ -67,29 +67,25 @@ CrowdingArchive::~CrowdingArchive()
  * @return true if the <code>Solution</code> has been inserted, false
  * otherwise.
  */
-bool CrowdingArchive::add(Solution *solution)
+bool CrowdingArchive::add(ValuePtr solution)
 {
     int flag = 0;
     int i = 0;
-    Solution * aux; //Store an solution temporally
     while (i < solutionsList_.size())
     {
-        aux = solutionsList_[i];
-
-        flag = dominance->compare(solution,aux);
+        Solution& aux = CastValue(solutionsList_[i], Solution)->getData();
+        flag = dominance->compare(solution, solutionsList_[i]);
         if (flag == 1)                 // The solution to add is dominated
         {
             return false;                // Discard the new solution
         }
         else if (flag == -1)           // A solution in the archive is dominated
         {
-            // Remove it from the population
-            delete aux;
             solutionsList_.erase (solutionsList_.begin()+i);
         }
         else
         {
-            if (equals->compare(aux,solution)==0)
+            if (equals->compare(solutionsList_[i], solution)==0)
             {
                 // There is an equal solution in the population
                 return false; // Discard the new solution
@@ -99,7 +95,7 @@ bool CrowdingArchive::add(Solution *solution)
     }
     // Insert the solution into the archive
     bool res = true;
-    solutionsList_.push_back(solution);
+    solutionsList_.push_back(CastValue(solution, Solution));
     if (size() > maxSize)   // The archive is full
     {
         distance->crowdingDistanceAssignment(this,objectives);
@@ -107,10 +103,6 @@ bool CrowdingArchive::add(Solution *solution)
         if (solution == solutionsList_[indexWorst_])
         {
             res = false;
-        }
-        else
-        {
-            delete solutionsList_[indexWorst_];
         }
         remove(indexWorst_);
     }

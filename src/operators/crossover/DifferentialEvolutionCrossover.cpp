@@ -76,19 +76,20 @@ DifferentialEvolutionCrossover::DifferentialEvolutionCrossover(MapOfStringFunct 
 
     if (parameters["CR"] != nullptr)
     {
-        CR_ = *(double *) parameters["CR"];
+        //CR_ = *(double *) parameters["CR"];
+		CR_ = DoubleValue(parameters["CR"]);
     }
     if (parameters["F"] != nullptr)
     {
-        F_ = *(double *) parameters["F"];
+        F_ = DoubleValue(parameters["F"]);
     }
     if (parameters["K"] != nullptr)
     {
-        K_ = *(double *) parameters["K"];
+        K_ = DoubleValue(parameters["K"]);
     }
     if (parameters["DE_VARIANT"] != nullptr)
     {
-        DE_Variant_ = *(std::string *) parameters["DE_VARIANT"];
+        DE_Variant_ = StringValue(parameters["DE_VARIANT"]);
     }
 
 } // DifferentialEvolutionCrossover
@@ -99,15 +100,12 @@ DifferentialEvolutionCrossover::DifferentialEvolutionCrossover(MapOfStringFunct 
 * @param object An object containing an array of three parents
 * @return An object containing the offSprings
 */
-void * DifferentialEvolutionCrossover::execute(void *object)
+ValuePtr DifferentialEvolutionCrossover::execute(ValuePtr object)
 {
-
-    void ** parameters = (void **) object;
-    Solution * current = (Solution *) parameters[0];
-    Solution ** parent = (Solution **) parameters[1];
+	VectorOfValuePtr& parameters = GetValue(object, VectorOfValuePtr);
+	Solution& current = GetValue(parameters[0], Solution);
+	VectorOfValuePtr parent = GetValue(parameters[1], VectorOfValuePtr);
     // TODO: Comprobar la longitud de parents
-
-    Solution * child;
 
     // TODO: Chequear el tipo de parents
     //  if (!(VALID_TYPES.contains(parent[0].getType().getClass()) &&
@@ -128,12 +126,13 @@ void * DifferentialEvolutionCrossover::execute(void *object)
 
     int jrand;
 
-    child = snew Solution(current);
+	//Solution * child = snew Solution(current);
+	SharedSolution child = MakeShared(Solution, Solution(current));
 
     XReal * xParent0 = snew XReal(parent[0]);
     XReal * xParent1 = snew XReal(parent[1]);
     XReal * xParent2 = snew XReal(parent[2]);
-    XReal * xCurrent = snew XReal(current);
+    XReal * xCurrent = snew XReal(parameters[0]);
     XReal * xChild   = snew XReal(child);
 
     int numberOfVariables = xParent0->getNumberOfDecisionVariables();

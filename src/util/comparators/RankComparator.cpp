@@ -29,7 +29,7 @@
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
  */
-int RankComparator::compare(void *o1, void *o2)
+int RankComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1 == nullptr)
@@ -37,13 +37,13 @@ int RankComparator::compare(void *o1, void *o2)
     else if (o2 == nullptr)
         return -1;
 
-    Solution * solution1 = (Solution *) o1;
-    Solution * solution2 = (Solution *) o2;
+	SharedValue(Solution) solution1 = CastValue(o1, Solution);
+	SharedValue(Solution) solution2 = CastValue(o2, Solution);
 
-    if (solution1->getRank() < solution2->getRank())
+    if (solution1->getData().getRank() < solution2->getData().getRank())
         return -1;
 
-    if (solution1->getRank() > solution2->getRank())
+    if (solution1->getData().getRank() > solution2->getData().getRank())
         return 1;
 
     return 0;

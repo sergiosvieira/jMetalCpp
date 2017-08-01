@@ -45,10 +45,9 @@ public:
     Operator ();
     Operator (MapOfStringFunct parameters);
     virtual ~Operator() = 0;
-    virtual void *execute(void *) = 0;
-    void setParameter(std::string name, void *value);
-    void *getParameter(std::string name);
-
+    virtual ValuePtr execute(ValuePtr) = 0;
+    void setParameter(std::string name, ValuePtr value);
+    ValuePtr getParameter(std::string name);
 }; // Operator
 
 #endif

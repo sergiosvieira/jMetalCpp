@@ -81,7 +81,7 @@ DTLZ5::~DTLZ5()
  * Evaluates a solution
  * @param solution The solution to evaluate
  */
-void DTLZ5::evaluate(Solution *solution)
+void DTLZ5::evaluate(ValuePtr solution)
 {
     XReal * vars = snew XReal(solution);
     double g = 0.0;
@@ -114,9 +114,9 @@ void DTLZ5::evaluate(Solution *solution)
             fx_[i] *= sin(theta_[aux]);
         } // if
     } //for
-
+	Solution& sol = CastValue(solution, Solution)->getData();
     for (int i = 0; i < numberOfObjectives_; i++)
-        solution->setObjective(i, fx_[i]);
+        sol.setObjective(i, fx_[i]);
 
     delete vars ;
 } // evaluate

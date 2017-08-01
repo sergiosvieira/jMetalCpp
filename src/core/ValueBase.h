@@ -1,9 +1,7 @@
-//  Kursawe.h
+//  Variable.h
 //
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//       Esteban López-Camacho <esteban@lcc.uma.es>
+//  Author:
+//       Sérgio S. Vieira <sergiosvieira@gmail.com>
 //
 //  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
 //
@@ -20,29 +18,41 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef __KURSAWE__
-#define __KURSAWE__
+#ifndef __VALUE_BASE__
+#define __VALUE_BASE__
 
-#include <Problem.h>
-#include <math.h>
-#include <BinaryRealSolutionType.h>
-#include <RealSolutionType.h>
-#include <ArrayRealSolutionType.h>
-#include <XReal.h>
-#include <Solution.h>
+#include <iostream>
+#include <memory>
 
-//
-
-/**
- * Class representing problem Kursawe
- */
-class Kursawe : public Problem
+enum class ValueType
 {
-
-public:
-    Kursawe(std::string solutionType, int numberOfVariables = 3);
-    ~Kursawe();
-    void evaluate(ValuePtr solution);
+    Integer,
+    Double,
+    Bool,
+    Float,
+    String,
+    Object
 };
 
-#endif
+class ValueBase
+{
+protected:
+    ValueType m_type;
+public:
+    ValueBase(){}
+    ~ValueBase(){}
+    ValueType getType()
+    {
+        return m_type;
+    }
+    virtual void stream(std::ostream& os){};
+    friend std::ostream& operator<<(std::ostream& os, ValueBase& instance)
+    {
+        instance.stream(os);
+        return os;
+    }
+};
+
+using ValuePtr = std::shared_ptr<ValueBase>;
+
+#endif /** __VALUE_BASE__ **/

@@ -56,7 +56,7 @@ DominanceComparator::~DominanceComparator()
  * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
  * respectively.
 **/
-int DominanceComparator::compare(void * o1, void * o2)
+int DominanceComparator::compare(ValuePtr o1, ValuePtr o2)
 {
 
     if (o1==nullptr)
@@ -64,8 +64,8 @@ int DominanceComparator::compare(void * o1, void * o2)
     else if (o2 == nullptr)
         return -1;
 
-    Solution * one = (Solution *) o1;
-    Solution * two = (Solution *) o2;
+    Solution&  one = CastValue(o1, Solution)->getData();
+    Solution&  two = CastValue(o2, Solution)->getData();
 
     int dominate1 ; // dominate1 indicates if some objective of solution1
     // dominates the same objective in solution2. dominate2
@@ -76,21 +76,21 @@ int DominanceComparator::compare(void * o1, void * o2)
 
     int flag; //stores the result of the comparison
 
-    if (one->getOverallConstraintViolation()!=
-            two->getOverallConstraintViolation() &&
-            ((one->getOverallConstraintViolation() < 0) ||
-             (two->getOverallConstraintViolation() < 0)))
+    if (one.getOverallConstraintViolation()!=
+            two.getOverallConstraintViolation() &&
+            ((one.getOverallConstraintViolation() < 0) ||
+             (two.getOverallConstraintViolation() < 0)))
     {
-        int returnValue = overallConstraintViolationComparator_->compare(one,two);
+        int returnValue = overallConstraintViolationComparator_->compare(o1, o2);
         return returnValue;
     }
 
     // Equal number of violated constraints. Applying a dominance Test then
     double value1, value2;
-    for (int i = 0; i < one->getNumberOfObjectives(); i++)
+    for (int i = 0; i < one.getNumberOfObjectives(); i++)
     {
-        value1 = one->getObjective(i);
-        value2 = two->getObjective(i);
+        value1 = one.getObjective(i);
+        value2 = two.getObjective(i);
         if (value1 < value2)
         {
             flag = -1;
