@@ -1,5 +1,5 @@
 //#include "BarrosF1_F3.h"
-#include "problems/SIGA/BarrosF1F3.h"
+#include "../problems/SIGA/BarrosF1F3.h"
 
 BarrosF1F3::BarrosF1F3(string solutionType, int numberOfVariables, int numberOfObjectives)
 {

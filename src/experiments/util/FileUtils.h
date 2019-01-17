@@ -23,6 +23,8 @@
 #define WINDOWS
 #elif WIN64
 #define WINDOWS
+#elif __MINGW64__
+#define WINDOWS
 #endif
 
 #ifndef __FILEUTILS__

@@ -25,8 +25,8 @@
 #include <Solution.h>
 
 #include <OMOPSO.h>
-#include "metaheuristics/smpso/SMPSO.h"
-#include "operators/mutation/PolynomialMutation.h"
+#include "../metaheuristics/smpso/SMPSO.h"
+#include "../operators/mutation/PolynomialMutation.h"
 
 #include <NonUniformMutation.h>
 #include <ProblemFactory.h>
@@ -35,11 +35,11 @@
 #include "RangeMutation.h"
 #include <iostream>
 #include <time.h>
-#include "problems/SIGA/BarrosF1F2.h"
-#include "problems/SIGA/BarrosF1F3.h"
-#include "problems/SIGA/BarrosF1F4.h"
-#include "problems/SIGA/BarrosF1F5.h"
-#include "problems/SIGA/BarrosF5F3.h"
+#include "../problems/SIGA/BarrosF1F2.h"
+#include "../problems/SIGA/BarrosF1F3.h"
+#include "../problems/SIGA/BarrosF1F4.h"
+#include "../problems/SIGA/BarrosF1F5.h"
+#include "../problems/SIGA/BarrosF5F3.h"
 
 /**
  * Method for configuring and running the OMOPSO algorithm
