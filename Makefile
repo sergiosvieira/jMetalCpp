@@ -72,7 +72,7 @@ LIB := $(LIBDIR)/$(LIBNAME)
 MAIN_DEPS := $(LIB)
 
 # Libraries needed when generating executables
-MAIN_LIBS := -lm #-pthread
+MAIN_LIBS := -lm -pthread
 
 
 # All rule
